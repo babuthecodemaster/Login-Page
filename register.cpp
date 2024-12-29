@@ -7,9 +7,6 @@ int main() {
     // Set content-type header
     cout << "Content-type: text/html\r\n\r\n";
     
-    // Output the start of the HTML response
-    cout << "<html>\n<head>\n<title>Registration Result</title>\n</head>\n<body>\n";
-
     // Get form data from environment variables (using POST method)
     string query = getenv("QUERY_STRING");
     string username, password, confirm_password;
@@ -26,17 +23,17 @@ int main() {
 
         // Simple password matching check
         if (password == confirm_password) {
-            // Here you would save the user credentials to a file or database
-            cout << "<h2>Registration Successful!</h2>\n";
+            // Here you would typically save the username and password to a database
+            // For this example, we will just redirect to afterLR.html with action=register
+            cout << "Location: afterLR.html?action=register\r\n\r\n";
         } else {
-            cout << "<h2>Passwords do not match.</h2>\n";
+            // Redirect to afterLR.html with action=error if passwords do not match
+            cout << "Location: afterLR.html?action=error\r\n\r\n";
         }
     } else {
-        cout << "<h2>Error in form submission</h2>\n";
+        // Redirect to afterLR.html with action=error if data is not properly received
+        cout << "Location: afterLR.html?action=error\r\n\r\n";
     }
-
-    // End HTML response
-    cout << "</body>\n</html>\n";
 
     return 0;
 }
